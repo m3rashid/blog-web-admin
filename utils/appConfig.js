@@ -12,6 +12,7 @@ const prodConfig = {
   cors: {
     credentials: true,
     origin: [
+      'http://localhost:3000',
       'https://cubicle-admin.netlify.app',
       'https://cubicle-admin.m3rashid.in',
     ],
