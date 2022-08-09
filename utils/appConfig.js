@@ -11,7 +11,10 @@ const devConfig = {
 const prodConfig = {
   cors: {
     credentials: true,
-    origin: ['https://cubicle-admin.netlify.app', 'cubicle-admin.m3rashid.in'],
+    origin: [
+      'https://cubicle-admin.netlify.app',
+      'https://cubicle-admin.m3rashid.in',
+    ],
     optionsSuccessStatus: 200,
   },
   errorMessage: 'Internal Server Error',
