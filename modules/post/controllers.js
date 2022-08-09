@@ -85,6 +85,7 @@ const createPost = async (req, res) => {
   }
 
   if (bannedWordsForSlug.includes(slug)) throw new Error('Invalid Slug')
+  if (slug.split(' ')[0] !== slug) throw new Error('Invalid slug')
 
   const post = new Post({
     title,

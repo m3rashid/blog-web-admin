@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Group, SimpleGrid } from '@mantine/core'
 
 import PageWrapper from 'layout/pageWrapper'
@@ -8,14 +8,26 @@ import { IPostCardForCard } from 'types'
 import Categories from 'components/categories'
 import { useHomePageStyles } from 'styles/useHomePageStyles'
 import { useStylesHome } from 'styles/useStylesHome'
+import useHttp from 'hooks/useHttp'
 
 interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const { classes } = useStylesHome()
+  const { request } = useHttp('get-post-cards')
   const { classes: thisPageClasses } = useHomePageStyles()
+  const [posts, setPosts] = useState<IPostCardForCard[]>([])
 
-  const posts: IPostCardForCard[] = []
+  const getPosts = async () => {
+    const res = await request({ endpoint: '/post/card', body: {} })
+    if (!res) return
+    console.log(res.data)
+    setPosts(res.data)
+  }
+  useEffect(() => {
+    getPosts().then().catch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <PageWrapper>

@@ -13,6 +13,7 @@ const createCategory = async (req, res) => {
   if (!name || !slug) throw new Error('Invalid request')
 
   if (bannedWordsForSlug.includes(slug)) throw new Error('Invalid slug')
+  if (slug.split(' ')[0] !== slug) throw new Error('Invalid slug')
 
   const category = new Category({ name, slug })
 
@@ -27,6 +28,7 @@ const editCategory = async (req, res) => {
   if (!category) throw new Error('Category not found')
 
   if (bannedWordsForSlug.includes(slug)) throw new Error('Invalid Slug')
+  if (slug.split(' ')[0] !== slug) throw new Error('Invalid slug')
 
   const newCategory = await Category.updateOne(
     { _id: categoryId },
