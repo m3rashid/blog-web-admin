@@ -1,36 +1,20 @@
-import {
-  Button,
-  createStyles,
-  Modal,
-  SimpleGrid,
-  TextInput,
-} from '@mantine/core'
+import { Button, Modal, SimpleGrid, TextInput } from '@mantine/core'
 import { AlphabetLatin, Webhook } from 'tabler-icons-react'
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import useHttp from 'hooks/useHttp'
 import { categoryAtom } from 'atoms/categories'
-
+import { useCategoryModalStyles } from 'styles/useCategoryModalStyles'
 interface IProps {
   modalOpen: boolean
   setModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const useStyles = createStyles((theme) => ({
-  input: {
-    fontFamily: theme.fontFamily,
-    input: {},
-  },
-  modal: {
-    fontWeight: 700,
-  },
-}))
-
 const CreateCategoryModal: FC<IProps> = ({ modalOpen, setModalOpen }) => {
   const [category, setCategory] = useState({ name: '', slug: '' })
   const setGlobalCategories = useSetRecoilState(categoryAtom)
-  const { classes } = useStyles()
+  const { classes } = useCategoryModalStyles()
   const { loading, request } = useHttp('create-category')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

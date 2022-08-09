@@ -1,44 +1,7 @@
 import { FC } from 'react'
-import {
-  createStyles,
-  Paper,
-  Text,
-  Title,
-  Button,
-  Box,
-  Group,
-} from '@mantine/core'
+import { Paper, Text, Title, Button, Box, Group } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-
-const useStyles = createStyles((theme) => ({
-  card: {
-    height: 400,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-
-  title: {
-    fontFamily: theme.fontFamily,
-    fontWeight: 900,
-    lineHeight: 1.2,
-    fontSize: 32,
-    marginTop: theme.spacing.xs,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-  },
-
-  category: {
-    color: theme.black,
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    backgroundColor: theme.primaryColor,
-    padding: '2px 5px',
-    borderRadius: '5px',
-  },
-}))
+import { usePostcardStyles } from 'styles/usePostcardStyles'
 
 interface IProps {
   image: string
@@ -51,7 +14,7 @@ interface IProps {
 }
 
 const PostCard: FC<IProps> = ({ image, title, categories, slug }) => {
-  const { classes } = useStyles()
+  const { classes } = usePostcardStyles()
   const navigate = useNavigate()
 
   return (

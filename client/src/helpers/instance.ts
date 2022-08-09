@@ -1,3 +1,5 @@
-export const instance = process.env.VERCEL_URL
-  ? `https://${process.env.SERVER_URL}/api`
-  : 'http://localhost:5000/api'
+import axios from 'axios'
+
+export const SERVER_URL = 'https://cubicle-backend.herokuapp.com/api'
+
+export const instance = axios.create({ baseURL: SERVER_URL })

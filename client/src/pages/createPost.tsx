@@ -1,54 +1,21 @@
-import {
-  Box,
-  Button,
-  Group,
-  Paper,
-  Switch,
-  Title,
-  createStyles,
-} from '@mantine/core'
-import { FC, useEffect, useMemo, useState } from 'react'
 import { nanoid } from 'nanoid'
-import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import { FC, useMemo, useState } from 'react'
+import { Box, Button, Group, Paper, Switch, Title } from '@mantine/core'
 
 import useHttp from 'hooks/useHttp'
-import ShowRender from 'components/showRender'
-import ChooseTypeButton from 'components/chooseTypeButton'
 import PageWrapper from 'layout/pageWrapper'
+import ShowRender from 'components/showRender'
 import { postAtom, PostType } from 'atoms/post'
+import ChooseTypeButton from 'components/chooseTypeButton'
 import CreateOrEditPost from 'components/createOrEditPost'
 import TitleSlug, { IPostMeta } from 'components/titleSlug'
+import { useCreatePostStyles } from 'styles/useCreatePostStyles'
 
-export const useStyles = createStyles((theme) => ({
-  buttonTop: {
-    display: 'flex',
-    gap: '10px',
-    marginBottom: '20px',
-    flexDirection: 'row-reverse',
-  },
-  input: {
-    flexGrow: 1,
-  },
-  switch: {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    gap: '10px',
-    padding: '0 10px',
-  },
-  switchInput: {
-    fontSize: '0.7rem',
-  },
-  switchLabel: {
-    padding: 0,
-    fontWeight: 600,
-  },
-}))
 interface IProps {}
 
 const CreatePost: FC<IProps> = () => {
-  const navigate = useNavigate()
-  const { classes } = useStyles()
+  const { classes } = useCreatePostStyles()
   const [data, setData] = useRecoilState(postAtom)
   const [publish, setPublish] = useState(true)
   const { loading, request } = useHttp('create-post')
@@ -63,11 +30,6 @@ const CreatePost: FC<IProps> = () => {
     }),
     []
   )
-
-  useEffect(() => {
-    // if (!session) navigate('/auth')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const [postMeta, setPostMeta] = useState<IPostMeta>(postMetaInitialState)
 

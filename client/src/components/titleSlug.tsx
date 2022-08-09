@@ -1,11 +1,4 @@
 import {
-  createStyles,
-  Group,
-  MultiSelect,
-  Paper,
-  TextInput,
-} from '@mantine/core'
-import {
   Article,
   Webhook,
   Photo,
@@ -14,23 +7,10 @@ import {
 } from 'tabler-icons-react'
 import { useRecoilValue } from 'recoil'
 import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
+import { Group, MultiSelect, Paper, TextInput } from '@mantine/core'
 
 import { categoryAtom } from 'atoms/categories'
-
-const useStyles = createStyles((theme) => ({
-  buttonTop: {
-    display: 'flex',
-    gap: '10px',
-    marginBottom: '20px',
-    flexDirection: 'row-reverse',
-  },
-  input: {
-    flexGrow: 1,
-  },
-  multiselect: {
-    marginTop: '15px',
-  },
-}))
+import { useTitleSlugStyles } from 'styles/useTitleSlugStyles'
 
 export interface IPostMeta {
   title: string
@@ -46,7 +26,7 @@ interface IProps {
 }
 
 const TitleSlug: FC<IProps> = ({ postMeta, setPostMeta }) => {
-  const { classes } = useStyles()
+  const { classes } = useTitleSlugStyles()
   const categories = useRecoilValue(categoryAtom)
   const categoriesToShow = categories.map((cat) => ({
     value: cat._id,

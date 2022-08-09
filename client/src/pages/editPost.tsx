@@ -7,30 +7,29 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import { FC, useEffect, useState } from 'react'
 import { Article, Photo } from 'tabler-icons-react'
+import { useLocation } from 'react-router-dom'
 
 import useHttp from 'hooks/useHttp'
-import ShowRender from 'components/showRender'
-import ChooseTypeButton from 'components/chooseTypeButton'
 import PageWrapper from 'layout/pageWrapper'
+import ShowRender from 'components/showRender'
 import { PostType, postAtom } from 'atoms/post'
-import { useStyles } from 'pages/createPost'
 import CreateOrEditPost from 'components/createOrEditPost'
+import ChooseTypeButton from 'components/chooseTypeButton'
+import { useCreatePostStyles } from 'styles/useCreatePostStyles'
 
 interface IProps {}
 
 const EditPost: FC<IProps> = () => {
   const { pathname } = useLocation()
-  const navigate = useNavigate()
   const { loading, request } = useHttp('save-and-publish')
   const [data, setData] = useRecoilState(postAtom)
   const [type, setType] = useState<PostType>('text')
-  const { classes } = useStyles()
+  const { classes } = useCreatePostStyles()
   const [postData, setPostData] = useState({
     title: '',
     publish: true,
@@ -55,10 +54,6 @@ const EditPost: FC<IProps> = () => {
   }
 
   useEffect(() => {
-    // if (!session) {
-    //   navigate('/auth', { replace: true })
-    //   return
-    // }
     getPost().then().catch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

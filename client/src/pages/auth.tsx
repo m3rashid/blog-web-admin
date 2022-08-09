@@ -6,21 +6,14 @@ import {
   Button,
   Container,
 } from '@mantine/core'
-import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react'
 
 import PageWrapper from 'layout/pageWrapper'
 import { useNotification } from 'hooks/useNotification'
 
 const Auth = () => {
-  const navigate = useNavigate()
   const { loadingNotif, updateFailureNotif, updateSuccessNotif } =
     useNotification({ id: 'login-signup' })
-
-  useEffect(() => {
-    // if (session) navigate('/', { replace: true })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const [loading, setLoading] = useState(false)
   const usernameRef = useRef<HTMLInputElement>(null)

@@ -1,28 +1,15 @@
 import React from 'react'
-import { Container, createStyles } from '@mantine/core'
+import { Container } from '@mantine/core'
 
 import BreadCrumbs from 'layout/breadCrumbs'
-
-export const useStyles = createStyles((theme) => ({
-  root: {
-    minHeight: '90vh',
-    maxWidth: '100vw',
-    overflowX: 'hidden',
-    paddingTop: '10px',
-    paddingBottom: '50px',
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[5]
-        : theme.colors.gray[1],
-  },
-}))
+import { usePageWrapperStyles } from 'styles/usePageWrapperStyles'
 
 interface IProps {
   children: any
 }
 
 const PageWrapper: React.FC<IProps> = ({ children }) => {
-  const { classes } = useStyles()
+  const { classes } = usePageWrapperStyles()
 
   return (
     <div className={classes.root}>

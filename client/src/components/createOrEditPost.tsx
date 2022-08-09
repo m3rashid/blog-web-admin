@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  createStyles,
-  Group,
-  Paper,
-  Textarea,
-} from '@mantine/core'
+import { Box, Button, Group, Paper, Textarea } from '@mantine/core'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { AlertOctagon } from 'tabler-icons-react'
@@ -14,23 +7,7 @@ import { showNotification } from '@mantine/notifications'
 import { deepClone } from 'helpers/deepClone'
 import ChooseTypeButton from 'components/chooseTypeButton'
 import { ICreatePost, postAtom, PostType } from 'atoms/post'
-
-const useStyles = createStyles((theme) => ({
-  textboxContainer: {
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.gray[1]
-        : theme.colors.dark[5],
-  },
-  textBox: {
-    textarea: {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
-    },
-  },
-}))
+import { useCreateOrEditStyles } from 'styles/useCreateOrEditStyles'
 
 interface IProps {
   id: string
@@ -40,7 +17,7 @@ const CreateOrEditPost: FC<IProps> = ({ id }) => {
   const [data, setData] = useRecoilState(postAtom)
   const concerned = data.find((section) => section.id === id)
   const [content, setContent] = useState(concerned?.content || '')
-  const { classes } = useStyles()
+  const { classes } = useCreateOrEditStyles()
 
   const setType = (val: PostType) => {
     setData((prev) => {

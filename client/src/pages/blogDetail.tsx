@@ -1,26 +1,15 @@
-import {
-  Box,
-  Group,
-  Image,
-  Loader,
-  Paper,
-  SimpleGrid,
-  Title,
-} from '@mantine/core'
-import axios from 'axios'
-import { FC, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
+import { Box, Group, Image, Paper, SimpleGrid, Title } from '@mantine/core'
 
 import Author from 'components/author'
 import Comments from 'components/comments'
 import Categories from 'components/categories'
 import RelatedPosts from 'components/relatedPosts'
-import { useStyles } from 'pages/home'
 import ShowRender from 'components/showRender'
-import { instance } from 'helpers/instance'
 import PageWrapper from 'layout/pageWrapper'
 import { ICategory, IRelatedPosts } from 'types'
 import CreateComment from 'components/createComment'
+import { useStylesHome } from 'styles/useStylesHome'
 
 export interface IPost {
   bannerImageUrl: string
@@ -39,8 +28,7 @@ export interface IPost {
 interface IProps {}
 
 const Post: FC<IProps> = () => {
-  const navigate = useNavigate()
-  const { classes } = useStyles()
+  const { classes } = useStylesHome()
 
   const postDetail: IPost = null as any
   const relatedPosts: IRelatedPosts[] = []

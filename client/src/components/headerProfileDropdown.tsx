@@ -11,6 +11,8 @@ import { showNotification } from '@mantine/notifications'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 import CreateCategoryModal from 'components/createCategoryModal'
+import { useRecoilValue } from 'recoil'
+import { userLoggedIn } from 'atoms/user'
 
 const LoggedInActions: FC<{
   setModalOpen: Dispatch<SetStateAction<boolean>>
@@ -61,25 +63,28 @@ const LoggedInActions: FC<{
 interface IProps {}
 
 const HeaderProfileDropdown: FC<IProps> = () => {
+  const isLoggedIn = useRecoilValue(userLoggedIn)
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
     <>
       <CreateCategoryModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      <Menu
-        control={
-          <Avatar
-            radius={100}
-            size={30}
-            color="yellow"
-            style={{ cursor: 'pointer' }}
-          >
-            <User />
-          </Avatar>
-        }
-      >
-        <LoggedInActions setModalOpen={setModalOpen} />
-      </Menu>
+      {isLoggedIn && (
+        <Menu
+          control={
+            <Avatar
+              radius={100}
+              size={30}
+              color="yellow"
+              style={{ cursor: 'pointer' }}
+            >
+              <User />
+            </Avatar>
+          }
+        >
+          <LoggedInActions setModalOpen={setModalOpen} />
+        </Menu>
+      )}
     </>
   )
 }

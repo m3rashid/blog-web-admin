@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import { marked } from 'marked'
 import hljs from 'highlight.js'
+import { Box, Code } from '@mantine/core'
 import DOMPurify from 'isomorphic-dompurify'
 import 'highlight.js/styles/github-dark-dimmed.css'
-import { Box, Code, createStyles } from '@mantine/core'
 
 import { ICreatePost } from 'atoms/post'
+import { useShowRenderStyles } from 'styles/useShowRenderStyles'
 
 marked.setOptions({
   langPrefix: 'hljs language-',
@@ -13,22 +14,6 @@ marked.setOptions({
     return hljs.highlightAuto(code, [lang]).value
   },
 })
-
-const useStyles = createStyles((theme) => ({
-  background: {
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gridGap: '20px',
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.gray[1]
-        : theme.colors.dark[5],
-  },
-  contentBox: {
-    padding: '0 5px',
-    overflowX: 'auto',
-  },
-}))
 
 interface IProps {
   data: ICreatePost[]
@@ -47,7 +32,7 @@ export const SingleSectionRender: FC<{ data: string }> = ({ data }) => {
 }
 
 const ShowRender: FC<IProps> = ({ data }) => {
-  const { classes } = useStyles()
+  const { classes } = useShowRenderStyles()
 
   return (
     <Box className={classes.background}>
