@@ -18,6 +18,8 @@ const prodConfig = {
       'https://cubicle-m3rashid.vercel.app',
       'https://cubicle.vercel.app',
       'https://cubicle-git-main-m3rashid.vercel.app',
+      'https://blogs.m3rashid.in',
+      'https://www.blogs.m3rashid.in',
     ],
     optionsSuccessStatus: 200,
   },
