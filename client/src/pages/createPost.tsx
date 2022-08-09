@@ -35,7 +35,7 @@ const CreatePost: FC<IProps> = () => {
 
   const saveAndPublish = async () => {
     const { data: saveRes } = await request({
-      endpoint: '/api/post/create',
+      endpoint: '/post/create',
       body: {
         title: postMeta.title,
         slug: postMeta.slug,

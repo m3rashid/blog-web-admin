@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useState } from 'react'
 
 import { INotifState, useNotification } from 'hooks/useNotification'
@@ -20,7 +19,13 @@ const useHttp = (id: string) => {
     try {
       setLoading(true)
       loadingNotif()
-      const res = await instance.post(endpoint, body)
+      const token = window.localStorage.getItem('cubicle-token') || ''
+      const res = await instance.post(endpoint, body, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { Authorization: token }),
+        },
+      })
       if (!res) {
         throw new Error('No response from the server')
       }

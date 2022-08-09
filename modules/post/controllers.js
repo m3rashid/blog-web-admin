@@ -1,10 +1,14 @@
 const { isValidObjectId } = require('mongoose')
 
+const { Category } = require('../category/model')
+const { bannedWordsForSlug } = require('../../utils/bannedWordsForSlug')
+
 const { Post } = require('./model')
 
 const getPostsByCategory = async (req, res) => {
   const { slug } = req.body
   if (!slug) throw new Error('Invalid Request')
+
   const posts = await Category.aggregate([
     { $match: { slug: slug } },
     {
@@ -36,9 +40,8 @@ const getPostsByCategory = async (req, res) => {
     { $project: { categories: { createdAt: 0, updatedAt: 0, __v: 0 } } },
   ])
 
-  if (!posts || posts.length === 0) {
-    return res.status(200).json([])
-  }
+  if (!posts || posts.length === 0) return res.status(200).json([])
+
   return res.status(200).json(posts)
 }
 

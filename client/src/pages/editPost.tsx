@@ -7,7 +7,6 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import axios from 'axios'
 import { nanoid } from 'nanoid'
 import { useRecoilState } from 'recoil'
 import { FC, useEffect, useState } from 'react'
@@ -39,8 +38,9 @@ const EditPost: FC<IProps> = () => {
   })
 
   const getPost = async () => {
-    const res = await axios.post('/api/post/details', {
-      slug: pathname.split('/')[2],
+    const res = await request({
+      endpoint: '/post/details',
+      body: { slug: pathname.split('/')[3] },
     })
     if (!res) return
     setData(res.data.postDetail.data)
@@ -60,7 +60,7 @@ const EditPost: FC<IProps> = () => {
 
   const saveAndPublish = async () => {
     const { data: saveAndPublishRes } = await request({
-      endpoint: '/api/post/edit',
+      endpoint: '/post/edit',
       body: {
         data: data,
         postId: postData.postId,

@@ -5,27 +5,29 @@ import {
   Notification,
   User,
 } from 'tabler-icons-react'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import { Avatar, Divider, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 import CreateCategoryModal from 'components/createCategoryModal'
-import { useRecoilValue } from 'recoil'
 import { userLoggedIn } from 'atoms/user'
 
 const LoggedInActions: FC<{
   setModalOpen: Dispatch<SetStateAction<boolean>>
 }> = ({ setModalOpen }) => {
   const navigate = useNavigate()
+  const setLoggedIn = useSetRecoilState(userLoggedIn)
 
   const handleLogout = () => {
-    // TODO: logout user
-    // signOut({ redirect: false })
+    window.localStorage.removeItem('cubicle-token')
+    setLoggedIn(false)
     showNotification({
       title: 'Logged out Successfully',
       message: 'You have been logged out',
     })
+    setTimeout(() => navigate('/', { replace: true }), 1000)
   }
 
   return (
@@ -33,7 +35,7 @@ const LoggedInActions: FC<{
       <Menu.Label>Author Actions</Menu.Label>
       <Menu.Item
         icon={<Article size={14} />}
-        onClick={() => navigate('/me/posts')}
+        onClick={() => navigate('/blogs')}
       >
         All Posts
       </Menu.Item>

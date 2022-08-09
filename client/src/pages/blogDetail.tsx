@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Box, Group, Image, Paper, SimpleGrid, Title } from '@mantine/core'
 
 import Author from 'components/author'
@@ -10,6 +10,8 @@ import PageWrapper from 'layout/pageWrapper'
 import { ICategory, IRelatedPosts } from 'types'
 import CreateComment from 'components/createComment'
 import { useStylesHome } from 'styles/useStylesHome'
+import { useLocation } from 'react-router-dom'
+import useHttp from 'hooks/useHttp'
 
 export interface IPost {
   bannerImageUrl: string
@@ -29,9 +31,27 @@ interface IProps {}
 
 const Post: FC<IProps> = () => {
   const { classes } = useStylesHome()
+  const { pathname } = useLocation()
+  const { request } = useHttp('get-blog-detail')
 
-  const postDetail: IPost = null as any
-  const relatedPosts: IRelatedPosts[] = []
+  const [postDetail, setPostDetail] = useState<IPost>()
+  const [relatedPosts, setRelatedPosts] = useState<IRelatedPosts[]>([])
+
+  const slug = pathname.split('/')[2]
+  const getPostDetail = async () => {
+    const res = await request({
+      endpoint: '/post/details',
+      body: { slug },
+    })
+    if (!res) return
+    setPostDetail(res.data.postDetail)
+    setRelatedPosts(res.data.relatedPosts)
+  }
+
+  useEffect(() => {
+    getPostDetail().then().catch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!postDetail) {
     return (

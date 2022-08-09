@@ -10,9 +10,15 @@ import { useRef } from 'react'
 
 import PageWrapper from 'layout/pageWrapper'
 import useHttp from 'hooks/useHttp'
+import { useSetRecoilState } from 'recoil'
+import { userLoggedIn } from 'atoms/user'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Auth = () => {
   const { loading, request } = useHttp('login')
+  const setLoggedIn = useSetRecoilState(userLoggedIn)
+  const { state } = useLocation()
+  const navigate = useNavigate()
 
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
@@ -23,8 +29,16 @@ const Auth = () => {
       password: passwordRef.current?.value,
     }
     const res = await request({ body: values, endpoint: '/login' })
-    if (!res) return
-    console.log(res.data)
+    if (!res) {
+      window.localStorage.removeItem('cubicle-token')
+      setLoggedIn(false)
+      return
+    }
+    window.localStorage.setItem('cubicle-token', res.data.token)
+    setLoggedIn(true)
+    if (state) {
+      navigate(`${state}`)
+    }
   }
 
   return (

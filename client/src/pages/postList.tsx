@@ -1,28 +1,25 @@
-import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Table, Anchor, ScrollArea, Button } from '@mantine/core'
 
+import useHttp from 'hooks/useHttp'
 import PageWrapper from 'layout/pageWrapper'
 
 interface IProps {}
 
 const PostList: FC<IProps> = () => {
   const navigate = useNavigate()
+  const { request } = useHttp('get-all-author-posts')
 
   const [posts, setPosts] = useState<any[]>([])
 
   const getAuthorPosts = async () => {
-    const res = await axios.post('/api/post/author', {})
+    const res = await request({ endpoint: '/post/author', body: {} })
     if (!res) return
     setPosts(res.data)
   }
 
   useEffect(() => {
-    // if (!session) {
-    //   navigate('/auth', { replace: true })
-    //   return
-    // }
     getAuthorPosts().then().catch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

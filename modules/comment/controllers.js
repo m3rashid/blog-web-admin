@@ -1,6 +1,7 @@
 const { isValidObjectId } = require('mongoose')
 
 const { Comment } = require('./model')
+const { Post } = require('../post/model')
 
 const createComment = async (req, res) => {
   const { postId, name, comment } = req.body

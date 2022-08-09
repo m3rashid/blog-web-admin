@@ -13,9 +13,9 @@ import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { Moon, Sun } from 'tabler-icons-react'
 
+import useHttp from 'hooks/useHttp'
 import { categoryAtom } from 'atoms/categories'
 import HeaderProfileDropdown from 'components/headerProfileDropdown'
-import axios from 'axios'
 import { HEADER_HEIGHT, useHeaderStyles } from 'styles/useHeaderStyles'
 
 interface IProps {
@@ -25,6 +25,7 @@ interface IProps {
 
 const TopHeader: FC<IProps> = ({ colorScheme, toggleColorScheme }) => {
   const setCategories = useSetRecoilState(categoryAtom)
+  const { request } = useHttp('get-categories')
 
   const [opened, setOpened] = useState(false)
   const navigate = useNavigate()
@@ -34,11 +35,14 @@ const TopHeader: FC<IProps> = ({ colorScheme, toggleColorScheme }) => {
     setOpened(!opened)
   }
 
+  const getCategories = async () => {
+    const res = await request({ endpoint: '/category/all', body: {} })
+    if (!res) return
+    setCategories(res.data)
+  }
+
   useEffect(() => {
-    axios
-      .post('/api/category/all', {})
-      .then((res) => setCategories(res.data))
-      .catch(console.log)
+    getCategories().then().catch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

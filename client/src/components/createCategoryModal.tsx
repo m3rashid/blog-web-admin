@@ -25,7 +25,7 @@ const CreateCategoryModal: FC<IProps> = ({ modalOpen, setModalOpen }) => {
   const handleCreateCategory = async () => {
     if (category.name.trim() === '' || category.slug.trim() === '') return
     const { data: saveRes } = await request({
-      endpoint: '/api/category/create',
+      endpoint: '/category/create',
       body: category,
     })
     setModalOpen(false)
