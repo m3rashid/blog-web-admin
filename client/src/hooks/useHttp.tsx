@@ -34,7 +34,7 @@ const useHttp = (id: string) => {
       else updateSuccessNotif({})
       return { data: res.data }
     } catch (err: any) {
-      console.log(err)
+      // console.log(err)
       setLoading(false)
 
       if (errorMsg) updateFailureNotif({ errorMsg })
