@@ -21,7 +21,6 @@ const Home: React.FC<IProps> = () => {
   const getPosts = async () => {
     const res = await request({ endpoint: '/post/card', body: {} })
     if (!res) return
-    console.log(res.data)
     setPosts(res.data)
   }
   useEffect(() => {

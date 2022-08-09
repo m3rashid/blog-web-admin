@@ -56,12 +56,6 @@ export const useHeaderStyles = createStyles((theme) => ({
     height: '100%',
   },
 
-  links: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
   burger: {
     [theme.fn.largerThan('sm')]: {
       display: 'none',

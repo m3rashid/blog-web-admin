@@ -1,17 +1,8 @@
-import {
-  Burger,
-  Center,
-  Container,
-  Group,
-  Header,
-  Image,
-  Paper,
-  Transition,
-} from '@mantine/core'
-import { FC, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 import { Moon, Sun } from 'tabler-icons-react'
+import { FC, useEffect } from 'react'
+import { Center, Container, Group, Header, Image } from '@mantine/core'
 
 import useHttp from 'hooks/useHttp'
 import { categoryAtom } from 'atoms/categories'
@@ -27,13 +18,8 @@ const TopHeader: FC<IProps> = ({ colorScheme, toggleColorScheme }) => {
   const setCategories = useSetRecoilState(categoryAtom)
   const { request } = useHttp('get-categories')
 
-  const [opened, setOpened] = useState(false)
   const navigate = useNavigate()
   const { classes } = useHeaderStyles()
-
-  const toggleOpened = () => {
-    setOpened(!opened)
-  }
 
   const getCategories = async () => {
     const res = await request({ endpoint: '/category/all', body: {} })
@@ -70,26 +56,10 @@ const TopHeader: FC<IProps> = ({ colorScheme, toggleColorScheme }) => {
           <div className={classes.cubicle}>Cubicle</div>
         </div>
 
-        <Group spacing={5} className={classes.links}>
+        <Group spacing={5}>
           <HeaderProfileDropdown />
           <ThemeChanger />
         </Group>
-
-        <Burger
-          opened={opened}
-          onClick={() => toggleOpened()}
-          className={classes.burger}
-          size="sm"
-        />
-
-        <Transition transition="pop-top-right" duration={200} mounted={opened}>
-          {(styles) => (
-            <Paper className={classes.dropdown} style={{ ...styles }}>
-              <HeaderProfileDropdown />
-              <ThemeChanger />
-            </Paper>
-          )}
-        </Transition>
       </Container>
     </Header>
   )
