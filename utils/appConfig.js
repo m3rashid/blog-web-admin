@@ -11,10 +11,7 @@ const devConfig = {
 const prodConfig = {
   cors: {
     credentials: true,
-    origin: [
-      'https://cubicle.vercel.app',
-      'https://cubicle-m3rashid.vercel.app',
-    ],
+    origin: ['http://localhost:3000'],
     optionsSuccessStatus: 200,
   },
   errorMessage: 'Internal Server Error',
