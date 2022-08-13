@@ -1,21 +1,21 @@
-import { Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Group, Loader } from '@mantine/core'
 import { Route, Routes } from 'react-router-dom'
 
-import Auth from 'pages/auth'
-import Home from 'pages/home'
-import NotFound from 'pages/404'
-import Post from 'pages/blogDetail'
-import Category from 'pages/category'
-import EditPost from 'pages/editPost'
-import PostList from 'pages/postList'
-import CreatePost from 'pages/createPost'
-
+import useHttp from 'hooks/useHttp'
+import { userLoggedIn } from 'atoms/user'
+import { useSetRecoilState } from 'recoil'
 import PageWrapper from 'layout/pageWrapper'
 import ProtectedRoute from 'helpers/protectedRoute'
-import useHttp from 'hooks/useHttp'
-import { useSetRecoilState } from 'recoil'
-import { userLoggedIn } from 'atoms/user'
+
+const Auth = lazy(() => import('pages/auth'))
+const Home = lazy(() => import('pages/home'))
+const NotFound = lazy(() => import('pages/404'))
+const Post = lazy(() => import('pages/blogDetail'))
+const Category = lazy(() => import('pages/category'))
+const EditPost = lazy(() => import('pages/editPost'))
+const PostList = lazy(() => import('pages/postList'))
+const CreatePost = lazy(() => import('pages/createPost'))
 
 const App = () => {
   const { request } = useHttp('get-user')
