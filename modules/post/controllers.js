@@ -27,6 +27,7 @@ const getPostsByCategory = async (req, res) => {
         slug: '$posts.slug',
         bannerImageUrl: '$posts.bannerImageUrl',
         categories: '$posts.categories',
+        createdAt: '$posts.createdAt',
       },
     },
     {
@@ -38,6 +39,7 @@ const getPostsByCategory = async (req, res) => {
       },
     },
     { $project: { categories: { createdAt: 0, updatedAt: 0, __v: 0 } } },
+    { $sort: { createdAt: -1 } },
   ])
 
   if (!posts || posts.length === 0) return res.status(200).json([])
@@ -46,7 +48,8 @@ const getPostsByCategory = async (req, res) => {
 }
 
 const getPostsForCard = async (req, res) => {
-  const posts = await Post.aggregate([
+  let posts = await Post.aggregate([
+    { $sort: { createdAt: -1 } },
     { $limit: 6 },
     {
       $lookup: {
@@ -65,6 +68,14 @@ const getPostsForCard = async (req, res) => {
       },
     },
   ])
+
+  posts = posts.filter((p) => {
+    let i = 0
+    for (i = 0; i < p.categories.length; i++) {
+      if (p.categories[i].slug === 'off-topic') return false
+    }
+    return true
+  })
 
   return res.status(200).json(posts)
 }
