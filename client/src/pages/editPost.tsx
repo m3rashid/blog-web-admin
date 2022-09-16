@@ -8,12 +8,13 @@ import {
   Title,
 } from '@mantine/core'
 import { nanoid } from 'nanoid'
-import { useRecoilState } from 'recoil'
+import { useLocation } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
 import { Article, Photo } from 'tabler-icons-react'
-import { useLocation } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import useHttp from 'hooks/useHttp'
+import { userLoggedIn } from 'atoms/user'
 import PageWrapper from 'layout/pageWrapper'
 import ShowRender from 'components/showRender'
 import { PostType, postAtom } from 'atoms/post'
@@ -27,6 +28,7 @@ const EditPost: FC<IProps> = () => {
   const { pathname } = useLocation()
   const { loading, request } = useHttp('save-and-publish')
   const [data, setData] = useRecoilState(postAtom)
+  const isUserLoggedIn = useRecoilValue(userLoggedIn)
   const [type, setType] = useState<PostType>('text')
   const { classes } = useCreatePostStyles()
   const [postData, setPostData] = useState({
@@ -38,6 +40,7 @@ const EditPost: FC<IProps> = () => {
   })
 
   const getPost = async () => {
+    if(!isUserLoggedIn) return
     const res = await request({
       endpoint: '/post/details',
       body: { slug: pathname.split('/')[3] },
@@ -59,6 +62,7 @@ const EditPost: FC<IProps> = () => {
   }, [])
 
   const saveAndPublish = async () => {
+    if(!isUserLoggedIn) return
     const { data: saveAndPublishRes } = await request({
       endpoint: '/post/edit',
       body: {
@@ -105,7 +109,7 @@ const EditPost: FC<IProps> = () => {
       <Paper
         shadow="xs"
         p="md"
-        style={{
+        style={{ 
           marginBottom: '30px',
           paddingTop: '40px',
           paddingBottom: '40px',

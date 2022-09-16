@@ -1,11 +1,13 @@
-import { Button, Modal, SimpleGrid, TextInput } from '@mantine/core'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { AlphabetLatin, Webhook } from 'tabler-icons-react'
+import { Button, Modal, SimpleGrid, TextInput } from '@mantine/core'
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
 
 import useHttp from 'hooks/useHttp'
+import { userLoggedIn } from 'atoms/user'
 import { categoryAtom } from 'atoms/categories'
 import { useCategoryModalStyles } from 'styles/useCategoryModalStyles'
+
 interface IProps {
   modalOpen: boolean
   setModalOpen: Dispatch<SetStateAction<boolean>>
@@ -14,6 +16,7 @@ interface IProps {
 const CreateCategoryModal: FC<IProps> = ({ modalOpen, setModalOpen }) => {
   const [category, setCategory] = useState({ name: '', slug: '' })
   const setGlobalCategories = useSetRecoilState(categoryAtom)
+  const isUserLoggedIn = useRecoilValue(userLoggedIn)
   const { classes } = useCategoryModalStyles()
   const { loading, request } = useHttp('create-category')
 
@@ -23,6 +26,7 @@ const CreateCategoryModal: FC<IProps> = ({ modalOpen, setModalOpen }) => {
   }
 
   const handleCreateCategory = async () => {
+    if(!isUserLoggedIn) return
     if (category.name.trim() === '' || category.slug.trim() === '') return
     const { data: saveRes } = await request({
       endpoint: '/category/create',

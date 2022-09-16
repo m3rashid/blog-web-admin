@@ -4,16 +4,20 @@ import { Table, Anchor, ScrollArea, Button } from '@mantine/core'
 
 import useHttp from 'hooks/useHttp'
 import PageWrapper from 'layout/pageWrapper'
+import { useRecoilValue } from 'recoil'
+import { userLoggedIn } from 'atoms/user'
 
 interface IProps {}
 
 const PostList: FC<IProps> = () => {
   const navigate = useNavigate()
+  const isUserLoggedIn = useRecoilValue(userLoggedIn)
   const { request } = useHttp('get-all-author-posts')
 
   const [posts, setPosts] = useState<any[]>([])
 
   const getAuthorPosts = async () => {
+    if(!isUserLoggedIn) return
     const res = await request({ endpoint: '/post/author', body: {} })
     if (!res) return
     setPosts(res.data)
@@ -23,6 +27,12 @@ const PostList: FC<IProps> = () => {
     getAuthorPosts().then().catch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if(!posts || posts.length === 0) return (
+    <PageWrapper>
+      <h2>Login to Continue</h2>
+    </PageWrapper>
+  )
 
   return (
     <PageWrapper>

@@ -9,16 +9,21 @@ import Categories from 'components/categories'
 import { useHomePageStyles } from 'styles/useHomePageStyles'
 import { useStylesHome } from 'styles/useStylesHome'
 import useHttp from 'hooks/useHttp'
+import { useRecoilValue } from 'recoil'
+import { userLoggedIn } from 'atoms/user'
+import { Link } from 'react-router-dom'
 
 interface IProps {}
 
 const Home: React.FC<IProps> = () => {
+  const isUserLoggedIn = useRecoilValue(userLoggedIn)
   const { classes } = useStylesHome()
   const { request } = useHttp('get-post-cards')
   const { classes: thisPageClasses } = useHomePageStyles()
   const [posts, setPosts] = useState<IPostCardForCard[]>([])
 
   const getPosts = async () => {
+    if(!isUserLoggedIn) return
     const res = await request({ endpoint: '/post/card', body: {} })
     if (!res) return
     setPosts(res.data)
@@ -49,8 +54,11 @@ const Home: React.FC<IProps> = () => {
                     title={post.title}
                     slug={post.slug}
                   />
-                ))
-              : null}
+                )) : (
+                  <Link to="/auth">
+                    <h2 style={{textAlign:'center'}}>Log in to continue ...</h2>
+                  </Link>
+                )}
           </SimpleGrid>
         </SimpleGrid>
         <SimpleGrid spacing={20} className={classes.secondChild}>

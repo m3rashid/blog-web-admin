@@ -1,4 +1,4 @@
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import { Moon, Sun } from 'tabler-icons-react'
 import { FC, useEffect } from 'react'
@@ -8,6 +8,7 @@ import useHttp from 'hooks/useHttp'
 import { categoryAtom } from 'atoms/categories'
 import HeaderProfileDropdown from 'components/headerProfileDropdown'
 import { HEADER_HEIGHT, useHeaderStyles } from 'styles/useHeaderStyles'
+import { userLoggedIn } from 'atoms/user'
 
 interface IProps {
   colorScheme: any
@@ -16,12 +17,14 @@ interface IProps {
 
 const TopHeader: FC<IProps> = ({ colorScheme, toggleColorScheme }) => {
   const setCategories = useSetRecoilState(categoryAtom)
+  const isUserLoggedIn = useRecoilValue(userLoggedIn)
   const { request } = useHttp('get-categories')
 
   const navigate = useNavigate()
   const { classes } = useHeaderStyles()
 
   const getCategories = async () => {
+    if(!isUserLoggedIn) return
     const res = await request({ endpoint: '/category/all', body: {} })
     if (!res) return
     setCategories(res.data)

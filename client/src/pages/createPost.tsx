@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { FC, useMemo, useState } from 'react'
 import { Box, Button, Group, Paper, Switch, Title } from '@mantine/core'
 
@@ -11,12 +11,14 @@ import ChooseTypeButton from 'components/chooseTypeButton'
 import CreateOrEditPost from 'components/createOrEditPost'
 import TitleSlug, { IPostMeta } from 'components/titleSlug'
 import { useCreatePostStyles } from 'styles/useCreatePostStyles'
+import { userLoggedIn } from 'atoms/user'
 
 interface IProps {}
 
 const CreatePost: FC<IProps> = () => {
   const { classes } = useCreatePostStyles()
   const [data, setData] = useRecoilState(postAtom)
+  const isUserLoggedIn = useRecoilValue(userLoggedIn)
   const [publish, setPublish] = useState(true)
   const { loading, request } = useHttp('create-post')
   const [type, setType] = useState<PostType>('text')
@@ -34,6 +36,7 @@ const CreatePost: FC<IProps> = () => {
   const [postMeta, setPostMeta] = useState<IPostMeta>(postMetaInitialState)
 
   const saveAndPublish = async () => {
+    if(!isUserLoggedIn) return
     const { data: saveRes } = await request({
       endpoint: '/post/create',
       body: {

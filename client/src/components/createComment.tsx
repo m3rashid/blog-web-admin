@@ -39,6 +39,7 @@ const CreateComment: FC<IProps> = ({ postId }) => {
     comment: '',
     remember: true,
   })
+  
   const handleAddComment = async () => {
     if (comment.remember) window.localStorage.setItem('myName', comment.name)
     else window.localStorage.removeItem('myName')
