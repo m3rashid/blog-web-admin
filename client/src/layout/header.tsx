@@ -60,7 +60,7 @@ const TopHeader: FC<IProps> = ({ colorScheme, toggleColorScheme }) => {
         </div>
 
         <Group spacing={5}>
-          <HeaderProfileDropdown />
+          <HeaderProfileDropdown refreshCategories={getCategories} />
           <ThemeChanger />
         </Group>
       </Container>

@@ -15,8 +15,9 @@ import CreateCategoryModal from 'components/createCategoryModal'
 import { userLoggedIn } from 'atoms/user'
 
 const LoggedInActions: FC<{
-  setModalOpen: Dispatch<SetStateAction<boolean>>
-}> = ({ setModalOpen }) => {
+  setModalOpen: Dispatch<SetStateAction<boolean>>,
+  refreshCategories: () => void
+}> = ({ setModalOpen, refreshCategories }) => {
   const navigate = useNavigate()
   const setLoggedIn = useSetRecoilState(userLoggedIn)
 
@@ -52,6 +53,10 @@ const LoggedInActions: FC<{
         Create Category
       </Menu.Item>
 
+      <Menu.Item icon={<Notification size={14} />} onClick={refreshCategories}>
+        Refresh Categories
+      </Menu.Item>
+
       <Divider />
 
       <Menu.Label>Your Session</Menu.Label>
@@ -62,9 +67,11 @@ const LoggedInActions: FC<{
   )
 }
 
-interface IProps {}
+interface IProps {
+  refreshCategories: () => void
+}
 
-const HeaderProfileDropdown: FC<IProps> = () => {
+const HeaderProfileDropdown: FC<IProps> = ({ refreshCategories }) => {
   const isLoggedIn = useRecoilValue(userLoggedIn)
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -84,7 +91,7 @@ const HeaderProfileDropdown: FC<IProps> = () => {
             </Avatar>
           }
         >
-          <LoggedInActions setModalOpen={setModalOpen} />
+          <LoggedInActions refreshCategories={refreshCategories} setModalOpen={setModalOpen} />
         </Menu>
       )}
     </>
