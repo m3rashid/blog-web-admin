@@ -6,10 +6,11 @@
   "author": "MD Rashid Hussain <md2000399@st.jmi.ac.in>",
   "license": "MIT",
   "scripts": {
+    "prestart": "yarn setupKeys && node ./modules/auth/generateKeyPair.js",
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "setupKeys": "mkdir ./modules/auth/keys || true",
-    "prod": "yarn setupKeys && node ./modules/auth/generateKeyPair.js && yarn start",
+    "prod": "yarn start",
     "lint": "next lint",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
