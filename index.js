@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 mongoose.set('debug', !isProduction)
 app.use('/api', routes)
 
-app.all('/', (_, res) => {
+app.get('/', (_, res) => {
   return res.json({ message: 'Server is OK' })
 })
 
