@@ -32,6 +32,7 @@ app.use((err, req, res, _) => {
 
 process.on('uncaughtException', (error) => {
   console.error(error)
+
   process.exit(1)
 })
 
