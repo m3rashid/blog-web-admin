@@ -48,7 +48,7 @@ const getPostsByCategory = async (req, res) => {
 }
 
 const getPostsForCard = async (req, res) => {
-  let posts = await Post.aggregate([
+  const posts = await Post.aggregate([
     { $sort: { createdAt: -1 } },
     { $limit: 6 },
     {
