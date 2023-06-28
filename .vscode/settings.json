@@ -1,7 +1,10 @@
 {
 	"cSpell.words": [
+		"deletepost",
 		"dompurify",
+		"getpost",
 		"mantine",
+		"Notif",
 		"precommit",
 		"ratelimit",
 		"tabler"

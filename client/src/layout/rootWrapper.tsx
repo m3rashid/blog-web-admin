@@ -69,7 +69,7 @@ const RootWrapper: FC<IProps> = ({ children }) => {
             withGlobalStyles
             withNormalizeCSS
           >
-            <NotificationsProvider limit={5} position="top-right">
+            <NotificationsProvider limit={5} position="bottom-right">
               <ModalsProvider>
                 <Header
                   colorScheme={colorScheme}

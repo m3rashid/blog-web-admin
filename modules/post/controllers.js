@@ -69,15 +69,14 @@ const getPostsForCard = async (req, res) => {
     },
   ])
 
-  posts = posts.filter((p) => {
+  const newPosts = posts.filter((p) => {
     let i = 0
     for (i = 0; i < p.categories.length; i++) {
       if (p.categories[i].slug === 'off-topic') return false
     }
     return true
   })
-
-  return res.status(200).json(posts)
+  return res.status(200).json(newPosts)
 }
 
 const createPost = async (req, res) => {

@@ -23,7 +23,7 @@ const Home: React.FC<IProps> = () => {
   const [posts, setPosts] = useState<IPostCardForCard[]>([])
 
   const getPosts = async () => {
-    if(!isUserLoggedIn) return
+    if (!isUserLoggedIn) return
     const res = await request({ endpoint: '/post/card', body: {} })
     if (!res) return
     setPosts(res.data)
@@ -42,23 +42,24 @@ const Home: React.FC<IProps> = () => {
       <Group style={{ alignItems: 'flex-start' }}>
         <SimpleGrid spacing={20} className={classes.firstChild}>
           <SimpleGrid className={thisPageClasses.inner} spacing={20}>
-            {posts && posts.length > 0
-              ? posts.map((post) => (
-                  <PostCard
-                    key={post._id}
-                    categories={post.categories.map((c) => ({
-                      name: c.name,
-                      _id: c._id + post._id,
-                    }))}
-                    image={post.bannerImageUrl}
-                    title={post.title}
-                    slug={post.slug}
-                  />
-                )) : (
-                  <Link to="/auth">
-                    <h2 style={{textAlign:'center'}}>Log in to continue ...</h2>
-                  </Link>
-                )}
+            {posts && posts.length > 0 ? (
+              posts.map((post) => (
+                <PostCard
+                  key={post._id}
+                  categories={post.categories.map((c) => ({
+                    name: c.name,
+                    _id: c._id + post._id,
+                  }))}
+                  image={post.bannerImageUrl}
+                  title={post.title}
+                  slug={post.slug}
+                />
+              ))
+            ) : (
+              <Link to="/auth">
+                <h2 style={{ textAlign: 'center' }}>Log in to continue ...</h2>
+              </Link>
+            )}
           </SimpleGrid>
         </SimpleGrid>
         <SimpleGrid spacing={20} className={classes.secondChild}>

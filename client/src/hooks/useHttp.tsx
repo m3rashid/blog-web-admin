@@ -23,7 +23,7 @@ const useHttp = (id: string) => {
       const res = await instance.post(endpoint, body, {
         headers: {
           'Content-Type': 'application/json',
-          ...(token && { Authorization: token }),
+          ...(token ? { Authorization: token } : {}),
         },
       })
       if (!res) {
