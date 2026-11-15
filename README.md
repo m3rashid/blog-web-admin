@@ -2,14 +2,18 @@
 
 # 📰 blog-web-admin
 
-**Blog platform with a built-in CMS and admin panel.**
+### Blog platform with a built-in CMS and admin panel
 
-[![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)](https://nodejs.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 </div>
 
 ---
+
+## 📖 Overview
+
+A blog platform with a built-in CMS and admin panel. Node.js/TypeScript backend with MongoDB storage.
 
 ## ✨ Features
 
@@ -17,7 +21,7 @@
 - 🧩 In-built CMS for content editing
 - 🛡 Admin panel
 
-## 🛠 Tech
+## 🛠 Tech stack
 
 `Node.js` · `TypeScript` · `MongoDB` · `Docker`
 
@@ -32,4 +36,4 @@ yarn dev
 
 ## 📄 License
 
-MIT
+MIT © [m3rashid](https://github.com/m3rashid)
